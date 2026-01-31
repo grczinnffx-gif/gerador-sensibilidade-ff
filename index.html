@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gerador FF Universal</title>
+
+<style>
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #0f0f0f;
+  color: #fff;
+}
+
+.container {
+  padding: 20px;
+  max-width: 420px;
+  margin: auto;
+}
+
+h1 {
+  text-align: center;
+  color: #00ff99;
+}
+
+select, button {
+  width: 100%;
+  padding: 14px;
+  margin-top: 10px;
+  border-radius: 8px;
+  border: none;
+  font-size: 16px;
+}
+
+select {
+  background: #1e1e1e;
+  color: #fff;
+}
+
+button {
+  background: #00ff99;
+  color: #000;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.resultado {
+  margin-top: 20px;
+  background: #1e1e1e;
+  padding: 15px;
+  border-radius: 10px;
+}
+</style>
+</head>
+
+<body>
+<div class="container">
+
+<h1>🔥 Gerador FF Universal</h1>
+
+<label>🎮 Estilo de jogo</label>
+<select id="estilo">
+  <option value="165">Rush / X1</option>
+  <option value="150">Balanceado</option>
+  <option value="135">Precisão</option>
+</select>
+
+<label>📱 Taxa de atualização (Hz)</label>
+<select id="hz">
+  <option value="0">60 Hz</option>
+  <option value="5">90 Hz</option>
+  <option value="8">120 Hz</option>
+  <option value="10">144 Hz+</option>
+</select>
+
+<button onclick="gerar()">GERAR SENSIBILIDADE</button>
+
+<div class="resultado" id="resultado"></div>
+
+</div>
+
+<script>
+function gerar() {
+
+  const estilo = Number(document.getElementById("estilo").value);
+  const hz = Number(document.getElementById("hz").value);
+
+  const largura = window.screen.width;
+  const altura = window.screen.height;
+  const diagonal = Math.sqrt(largura**2 + altura**2);
+
+  let ajusteTela = 0;
+  if (diagonal < 2200) ajusteTela = -10;
+  else if (diagonal > 2600) ajusteTela = 10;
+
+  let geral = estilo + hz + ajusteTela;
+  geral = Math.max(0, Math.min(200, geral));
+
+  document.getElementById("resultado").innerHTML = `
+  🎯 <b>Geral:</b> ${geral}<br><br>
+  🔴 Red Dot: ${geral - 10}<br>
+  🔍 Mira 2x: ${geral - 20}<br>
+  🔭 Mira 4x: ${geral - 40}<br>
+  🎯 Sniper: ${geral - 80}<br>
+  👁️ Olhadinha: ${geral - 50}
+  `;
+}
+</script>
+
+</body>
+</html>
